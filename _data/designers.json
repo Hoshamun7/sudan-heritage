@@ -1,0 +1,20 @@
+[
+  {
+    "id": "zaza-kamal",
+    "initials": "ZK",
+    "name": "Zaza Kamal Designs",
+    "bio_en": "Cairo-based designer specializing in contemporary toub",
+    "bio_ar": "مصمم مقره القاهرة متخصص في الطوب العصري",
+    "location_en": "Khartoum → Cairo",
+    "location_ar": "الخرطوم → القاهرة"
+  },
+  {
+    "id": "elegant-toob",
+    "initials": "ET",
+    "name": "Elegant Toob",
+    "bio_en": "Traditional craftsmanship meets modern elegance",
+    "bio_ar": "الحرفية التقليدية تلتقي بالأناقة العصرية",
+    "location_en": "Omdurman",
+    "location_ar": "أم درمان"
+  }
+]

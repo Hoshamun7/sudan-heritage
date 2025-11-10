@@ -1,0 +1,38 @@
+[
+  {
+    "id": "jalabiya-men",
+    "title_en": "Men's Traditional Attire",
+    "title_ar": "الملابس التقليدية الرجالية",
+    "image": "/images/uploads/jalabiya.jpg",
+    "desc_en": "Classic white jalabiya with hand-stitched embroidery",
+    "desc_ar": "جلابية بيضاء كلاسيكية مع تطريز يدوي",
+    "region_en": "Central Sudan",
+    "region_ar": "وسط السودان",
+    "price": "$85 - $250",
+    "category": "men"
+  },
+  {
+    "id": "toub-women",
+    "title_en": "Women's Traditional Wraps",
+    "title_ar": "الأغطية التقليدية النسائية",
+    "image": "/images/uploads/toub.jpg",
+    "desc_en": "Handwoven toub in indigo-dyed fabric with Nubian patterns",
+    "desc_ar": "طوب منسوج يدوياً بأقمشة صبغة النيلة مع أنماط نوبية",
+    "region_en": "Northern Sudan",
+    "region_ar": "شمال السودان",
+    "price": "$120 - $400",
+    "category": "women"
+  },
+  {
+    "id": "beja-textiles",
+    "title_en": "Beja Textiles",
+    "title_ar": "منسوجات البجا",
+    "image": "/images/uploads/beja.jpg",
+    "desc_en": "Vibrant Beja-inspired wraps representing coastal culture",
+    "desc_ar": "أغطية ملونة مستوحاة من البجا تمثل ثقافة الساحل",
+    "region_en": "Eastern Sudan",
+    "region_ar": "شرق السودان",
+    "price": "$95 - $180",
+    "category": "accessories"
+  }
+]
