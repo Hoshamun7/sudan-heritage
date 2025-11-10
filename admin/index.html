@@ -1,13 +1,215 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Content Manager</title>
-</head>
-<body>
-  <!-- Include the script that builds the page and powers Decap CMS -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-</body>
-</html>
+<script>
+    // Global language state
+    let currentLang = 'en';
+
+    // Initialize all dynamic content
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Hide Arabic elements initially
+        document.querySelectorAll('.ar-text').forEach(el => el.style.display = 'none');
+
+        // Load all content in order
+        await Promise.all([
+            loadHero(),
+            loadImpact(),
+            loadStats(),
+            loadProducts(),
+            loadDesigners()
+        ]);
+    });
+
+    // Update language display for dynamic content
+    function updateLanguageDisplay() {
+        const isArabic = currentLang === 'ar';
+        document.querySelectorAll('.en-text').forEach(el => {
+            el.style.display = isArabic ? 'none' : 'inline';
+        });
+        document.querySelectorAll('.ar-text').forEach(el => {
+            el.style.display = isArabic ? 'inline' : 'none';
+        });
+    }
+
+    // Language toggle function
+    function toggleLanguage() {
+        const html = document.documentElement;
+        const langText = document.getElementById('lang-text');
+
+        currentLang = currentLang === 'en' ? 'ar' : 'en';
+
+        html.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+        html.setAttribute('lang', currentLang);
+        langText.textContent = currentLang === 'en' ? 'العربية' : 'English';
+
+        updateLanguageDisplay();
+    }
+
+    // Load hero content
+    async function loadHero() {
+        try {
+            const response = await fetch('/_data/hero.json');
+            if (!response.ok) throw new Error('Failed to load hero content');
+
+            const data = await response.json();
+
+            // Update hero title
+            const heroTitle = document.querySelector('.hero h1');
+            heroTitle.innerHTML = `
+                <span class="en-text">${data.title_en}</span>
+                <span class="ar-text arabic-text" style="display: none;">${data.title_ar}</span>
+            `;
+
+            // Update hero subtitle
+            const heroSubtitle = document.querySelector('.hero .hero-content > p');
+            heroSubtitle.innerHTML = `
+                <span class="en-text">${data.subtitle_en}</span>
+                <span class="ar-text arabic-text" style="display: none;">${data.subtitle_ar}</span>
+            `;
+
+            // Update CTA button
+            const ctaButton = document.querySelector('.hero .btn');
+            ctaButton.innerHTML = `
+                <span class="en-text">${data.cta_text_en}</span>
+                <span class="ar-text arabic-text" style="display: none;">${data.cta_text_ar}</span>
+            `;
+
+            updateLanguageDisplay();
+        } catch (error) {
+            console.error('Error loading hero content:', error);
+        }
+    }
+
+    // Load impact content
+    async function loadImpact() {
+        try {
+            const response = await fetch('/_data/impact.json');
+            if (!response.ok) throw new Error('Failed to load impact content');
+
+            const data = await response.json();
+
+            // Update section title
+            const impactTitle = document.querySelector('.impact h2');
+            impactTitle.innerHTML = `
+                <span class="en-text">${data.section_title_en}</span>
+                <span class="ar-text arabic-text" style="display: none;">${data.section_title_ar}</span>
+            `;
+
+            // Update intro paragraph
+            const impactIntro = document.querySelector('.impact .impact-container > p');
+            impactIntro.innerHTML = `
+                <span class="en-text">${data.intro_text_en}</span>
+                <span class="ar-text arabic-text" style="display: none;">${data.intro_text_ar}</span>
+            `;
+
+            updateLanguageDisplay();
+        } catch (error) {
+            console.error('Error loading impact content:', error);
+        }
+    }
+
+    // Load statistics
+    async function loadStats() {
+        try {
+            const response = await fetch('/_data/stats.json');
+            if (!response.ok) throw new Error('Failed to load stats');
+
+            const stats = await response.json();
+            const grid = document.getElementById('stats-grid');
+
+            grid.innerHTML = stats.map(stat => `
+                <div class="stat-item">
+                    <span class="stat-number">${stat.number}</span>
+                    <span class="stat-label">
+                        <span class="en-text">${stat.label_en}</span>
+                        <span class="ar-text arabic-text" style="display: none;">${stat.label_ar}</span>
+                    </span>
+                </div>
+            `).join('');
+
+            updateLanguageDisplay();
+        } catch (error) {
+            console.error('Error loading stats:', error);
+            document.getElementById('stats-grid').innerHTML =
+                '<p style="text-align: center; color: var(--semantic-red);">Failed to load statistics</p>';
+        }
+    }
+
+    // Load products
+    async function loadProducts() {
+        try {
+            const response = await fetch('/_data/products.json');
+            if (!response.ok) throw new Error('Failed to load products');
+
+            const products = await response.json();
+            const grid = document.getElementById('products-grid');
+
+            grid.innerHTML = products.map(product => `
+                <div class="collection-card" data-category="${product.category}">
+                    <div class="collection-image" style="background-image: url('${product.image || ''}'), linear-gradient(135deg, var(--brand-01), var(--interactive-01));">
+                        <span class="en-text">${product.title_en}</span>
+                        <span class="ar-text arabic-text" style="display: none;">${product.title_ar}</span>
+                    </div>
+                    <div class="collection-info">
+                        <span class="region-tag">
+                            <span class="en-text">${product.region_en}</span>
+                            <span class="ar-text arabic-text" style="display: none;">${product.region_ar}</span>
+                        </span>
+                        <h3>
+                            <span class="en-text">${product.title_en}</span>
+                            <span class="ar-text arabic-text" style="display: none;">${product.title_ar}</span>
+                        </h3>
+                        <p>
+                            <span class="en-text">${product.desc_en}</span>
+                            <span class="ar-text arabic-text" style="display: none;">${product.desc_ar}</span>
+                        </p>
+                        <p><strong>${product.price}</strong></p>
+                        <a href="#" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                            <span class="en-text">View Collection</span>
+                            <span class="ar-text arabic-text" style="display: none;">عرض المجموعة</span>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+
+            updateLanguageDisplay();
+        } catch (error) {
+            console.error('Error loading products:', error);
+            document.getElementById('products-grid').innerHTML =
+                '<p style="text-align: center; color: var(--semantic-red);">Failed to load products</p>';
+        }
+    }
+
+    // Load designers
+    async function loadDesigners() {
+        try {
+            const response = await fetch('/_data/designers.json');
+            if (!response.ok) throw new Error('Failed to load designers');
+
+            const designers = await response.json();
+            const grid = document.getElementById('designers-grid');
+
+            grid.innerHTML = designers.map(designer => `
+                <div class="designer-card">
+                    <div class="designer-avatar">${designer.initials}</div>
+                    <h3>${designer.name}</h3>
+                    <p>
+                        <span class="en-text">${designer.bio_en}</span>
+                        <span class="ar-text arabic-text" style="display: none;">${designer.bio_ar}</span>
+                    </p>
+                    <p><strong>
+                        <span class="en-text">${designer.location_en}</span>
+                        <span class="ar-text arabic-text" style="display: none;">${designer.location_ar}</span>
+                    </strong></p>
+                    <a href="#" class="btn btn-accent" style="margin-top: 1rem;">
+                        <span class="en-text">View Profile</span>
+                        <span class="ar-text arabic-text" style="display: none;">عرض الملف</span>
+                    </a>
+                </div>
+            `).join('');
+
+            updateLanguageDisplay();
+        } catch (error) {
+            console.error('Error loading designers:', error);
+            document.getElementById('designers-grid').innerHTML =
+                '<p style="text-align: center; color: var(--semantic-red);">Failed to load designers</p>';
+        }
+    }
+</script>

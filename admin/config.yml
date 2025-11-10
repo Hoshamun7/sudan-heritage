@@ -1,10 +1,6 @@
 backend:
   name: git-gateway
-  branch: main # Change to your main branch name
-
-# Local development (comment out git-gateway above and uncomment below)
-# backend:
-#   name: test-repo
+  branch: main
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -12,20 +8,53 @@ public_folder: "/images/uploads"
 # Enable editorial workflow for draft/publish system
 publish_mode: editorial_workflow
 
+# Editor settings
+editor:
+  preview: false
+
 collections:
+  # HERO SECTION
+  - name: "hero"
+    label: "Hero Section"
+    files:
+      - label: "Hero Content"
+        name: "hero"
+        file: "_data/hero.json"
+        fields:
+          - {label: "Title (English)", name: "title_en", widget: "string"}
+          - {label: "Title (Arabic)", name: "title_ar", widget: "string"}
+          - {label: "Subtitle (English)", name: "subtitle_en", widget: "text"}
+          - {label: "Subtitle (Arabic)", name: "subtitle_ar", widget: "text"}
+          - {label: "Button Text (English)", name: "cta_text_en", widget: "string"}
+          - {label: "Button Text (Arabic)", name: "cta_text_ar", widget: "string"}
+
+  # IMPACT SECTION
+  - name: "impact"
+    label: "Impact Section"
+    files:
+      - label: "Impact Content"
+        name: "impact"
+        file: "_data/impact.json"
+        fields:
+          - {label: "Section Title (English)", name: "section_title_en", widget: "string"}
+          - {label: "Section Title (Arabic)", name: "section_title_ar", widget: "string"}
+          - {label: "Intro Paragraph (English)", name: "intro_text_en", widget: "text"}
+          - {label: "Intro Paragraph (Arabic)", name: "intro_text_ar", widget: "text"}
+
+  # PRODUCTS
   - name: "products"
     label: "Products"
     label_singular: "Product"
     folder: "_data"
     create: true
-    slug: "{{slug}}"
+    slug: "product-{{slug}}"
     extension: "json"
     format: "json"
     fields:
       - {label: "Product ID", name: "id", widget: "string", hint: "Unique identifier (e.g., jalabiya-men)"}
       - {label: "Title (English)", name: "title_en", widget: "string"}
       - {label: "Title (Arabic)", name: "title_ar", widget: "string"}
-      - {label: "Product Image", name: "image", widget: "image", choose_url: false, allow_multiple: false}
+      - {label: "Product Image", name: "image", widget: "image", required: false}
       - {label: "Description (English)", name: "desc_en", widget: "text"}
       - {label: "Description (Arabic)", name: "desc_ar", widget: "text"}
       - {label: "Region (English)", name: "region_en", widget: "string"}
@@ -33,12 +62,13 @@ collections:
       - {label: "Price Range", name: "price", widget: "string", hint: "e.g., $85 - $250"}
       - {label: "Category", name: "category", widget: "select", options: ["men", "women", "accessories"]}
 
+  # DESIGNERS
   - name: "designers"
     label: "Designers"
     label_singular: "Designer"
     folder: "_data"
     create: true
-    slug: "{{slug}}"
+    slug: "designer-{{slug}}"
     extension: "json"
     format: "json"
     fields:
@@ -50,12 +80,13 @@ collections:
       - {label: "Location (English)", name: "location_en", widget: "string"}
       - {label: "Location (Arabic)", name: "location_ar", widget: "string"}
 
+  # STATISTICS
   - name: "stats"
     label: "Statistics"
     label_singular: "Statistic"
     folder: "_data"
     create: true
-    slug: "{{slug}}"
+    slug: "stat-{{slug}}"
     extension: "json"
     format: "json"
     fields:
